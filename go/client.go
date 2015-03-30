@@ -18,10 +18,18 @@ func main() {
 	client.OnMessage(3, func(ctx *fly.Context, msg *Hello) {
 		log.Println("client on message", msg)
 	})
-	reply := &Hello{}
-	if err := client.Call(1, reply, &Hello{Id: 123}); err != nil {
-		log.Fatal(err)
-	}
-	log.Println("reply 1", reply)
-	client.SendMessage(2, &Hello{Id: 123})
+	done := make(chan int, 1)
+	client.OnMessage(1, func(ctx *fly.Context, m *Hello) {
+		/*
+			reply := &Hello{}
+			if err := client.Call(1, reply, &Hello{Id: 123}); err != nil {
+				log.Fatal(err)
+			}
+			log.Println("reply 1", reply)
+			client.SendMessage(2, &Hello{Id: 123})
+		*/
+		log.Println("done")
+		done <- 1
+	})
+	<-done
 }

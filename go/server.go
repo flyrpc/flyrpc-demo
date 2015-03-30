@@ -12,6 +12,10 @@ func main() {
 		Serializer: fly.Protobuf,
 	})
 
+	server.OnConnect(func(ctx *fly.Context) {
+		ctx.SendMessage(1, &Hello{Id: 234, Name: "abc"})
+	})
+
 	server.OnMessage(1, func(ctx *fly.Context, u *Hello) *Hello {
 		u.Id += 1
 		return u
