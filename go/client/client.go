@@ -5,8 +5,7 @@ import (
 	"net"
 
 	"github.com/flyrpc/flyrpc"
-
-	. "./msg"
+	. "github.com/flyrpc/flyrpc-demo/go/msg"
 )
 
 func main() {
